@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheng-Jui Lee | SLEVA-TTS Research Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --text: #333;
+            --bg: #fdfdfd;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            border-left: 5px solid var(--accent);
+            padding-left: 1rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .img-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+
+        .img-container img:hover {
+            transform: scale(1.01);
+        }
+
+        .img-caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .audio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+        .audio-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .audio-label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        audio {
+            width: 100%;
+            height: 35px;
+        }
+
+        .methodology-block {
+            background: #f0f4f8;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        blockquote {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid #ccc;
+            padding-left: 1rem;
+            margin: 1rem 0;
+        }
+
+        .eval-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .eval-grid img {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .btn-hf {
+            display: inline-block;
+            background: #ffbd2e;
+            color: black;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>SLEVA-TTS Research Showcase</h1>
+        <p>Self-Learned Emotional Valence-Arousal Space for Controllable TTS</p>
+        <!-- <a href="https://huggingface.co/spaces/YOUR_NAME/SLEVA-TTS" class="btn-hf" target="_blank">🤗 Live Demo on Hugging Face</a> -->
+        <p>
+            <a href="https://ethesys.lis.nsysu.edu.tw/ETD-db/ETD-search-c/view_etd?URN=etd-0027126-101440"
+                target="_blank" style="color:white; margin:0 10px; text-decoration:none;">
+                📄 Master Thesis
+            </a>
+        </p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2 class="section-title">Project Overview & Motivation</h2>
+            <div class="card">
+                <p><strong>Motivation:</strong> Existing emotional TTS relies on discrete labels or SER-based pipelines
+                    , which fail to capture fine-grained intensity or suffer from stability issues
+                    during multi-emotion transitions.</p>
+                <p><strong>Goal:</strong> To build a controllable system that learns a continuous emotional VA space
+                    without explicit annotations, enabling smooth emotion transitions and fine-grained
+                    intensity control.
+                </p>
+                <div class="img-container">
+                    <img src="img/va_plane.png" alt="Self-Learned VA Plane">
+                    <p class="img-caption">
+                        Valence-Arousal (VA) plane commonly used in psychology.
+                    </p>
+                </div>
+
+                <p>
+                    <strong>What is VA Space?</strong><br>
+                <ul>
+                    <li>
+                        <strong>Valence:</strong>
+                        represents the positivity or negativity of emotion.
+                    </li>
+
+                    <li>
+                        <strong>Arousal:</strong>
+                        describes the intensity or activation level of emotional expression.
+                    </li>
+                </ul>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">1. Main System Architecture</h2>
+            <div class="card">
+                <div class="img-container">
+                    <img src="img/main_arch.png" alt="Main Architecture">
+                    <p class="img-caption">Figure 1: Overview Architecture of SLEVA-TTS. </p>
+                </div>
+                <p>
+                    <strong>Design Insight:</strong>
+                    Built on a non-autoregressive framework, the system integrates BERT-based
+                    semantic representations, adversarial feature disentanglement, and GMM-based
+                    acoustic modeling for expressive and stable speech synthesis.
+                </p>
+                <p>
+                    <strong>The core contribution</strong> is the proposed self-learning VA module, which optimizes
+                    learnable emotion
+                    centers and shared latent embeddings to construct a continuous emotional space without
+                    explicit VA annotations.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">2. Multi-modal Encoder & Disentanglement</h2>
+            <div class="card">
+                <div class="img-container">
+                    <img src="img/encoder.png" alt="Encoder Architecture">
+                    <p class="img-caption">Figure 2: Multi-modal Encoder featuring adversarial feature disentanglement.
+                    </p>
+                </div>
+                <p>
+                    <strong>Design Insight:</strong>
+                    The proposed multimodal encoder disentangles speaker, emotion, and accent embeddings in a unified
+                    framework.
+                    It further <strong>integrates eGeMAPS acoustic features</strong> through cross-attention to provide
+                    global
+                    prosodic guidance.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">3. Multi-emotion Transition Mechanism</h2>
+            <div class="card">
+                <div class="img-container">
+                    <img src="img/cross_segment.png" alt="Cross Segment Interaction">
+                    <p class="img-caption">Figure 3: Multi-emotion transition via random segmentation and shifted-window
+                        mechanism.</p>
+                </div>
+
+                <div class="method-note">
+                    <p><strong>Design & Motivation:</strong> When specifying multiple emotions within a single
+                        utterance, naively switching VA conditions at segment boundaries often introduces unnatural
+                        artifacts. To ensure stable and smooth transitions, we implemented two key strategies:</p>
+                    <ul>
+                        <li>
+                            <strong>Random Segmentation Training (ST):</strong>
+                            During training, we randomly segment each utterance's attention sequence and
+                            resample boundaries every batch. By drawing
+                            K ~ Uniform(0, 5)
+                            and splitting the sequence into
+                            K + 1 segments, the model becomes more robust to forced
+                            emotional boundaries and transition conditions.
+                        </li>
+
+                        <li>
+                            <strong>Shifted-Window Interaction (SW):</strong>
+                            Inspired by Swin Transformer, shifted windows are applied in even-numbered
+                            encoder layers to enable cross-boundary feature interactions. Each overlapped segment is
+                            additionally conditioned with its corresponding interpolated VA embedding,
+                            allowing the model to learn smoother emotional transitions and more natural
+                            attention behavior near segment boundaries.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Demo I: Emotion Intensity Recognition</h2>
+            <div class="card">
+                <p><strong>Motivation:</strong> To verify if the self-learned VA space provides precise
+                    intensity control across different affective states.</p>
+
+
+
+                <p class="img-caption">Each emotion category is sampled at three levels: 1/3 (Weak), 2/3 (Moderate), and
+                    1.0 (Strong) of the converged VA vector to boundary.</p>
+
+                <style>
+                    .intensity-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 10px;
+                        font-size: 0.9rem;
+                    }
+
+                    .intensity-table th {
+                        background: #2c3e50;
+                        color: white;
+                        padding: 10px;
+                        text-align: center;
+                    }
+
+                    .intensity-table td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: center;
+                        background: #fff;
+                    }
+
+                    .intensity-table audio {
+                        width: 160px;
+                        height: 30px;
+                    }
+
+                    .emotion-label {
+                        font-weight: bold;
+                        background: #f4f4f4 !important;
+                        width: 100px;
+                    }
+                </style>
+
+                <table class="intensity-table">
+                    <thead>
+                        <tr>
+                            <th>Emotion</th>
+                            <th>Weak (1/3)</th>
+                            <th>Moderate (2/3)</th>
+                            <th>Strong (1.0)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="emotion-label">Neutral</td>
+                            <td>None</td>
+                            <td><audio controls src="wav/neutral.wav"></audio></td>
+                            <td>None</td>
+                        </tr>
+                        <tr>
+                            <td class="emotion-label">Angry</td>
+                            <td><audio controls src="wav/angry_w.wav"></audio></td>
+                            <td><audio controls src="wav/angry_m.wav"></audio></td>
+                            <td><audio controls src="wav/angry_s.wav"></audio></td>
+                        </tr>
+
+                        <tr>
+                            <td class="emotion-label">Happy</td>
+                            <td><audio controls src="wav/happy_w.wav"></audio></td>
+                            <td><audio controls src="wav/happy_m.wav"></audio></td>
+                            <td><audio controls src="wav/happy_s.wav"></audio></td>
+                        </tr>
+                        <tr>
+                            <td class="emotion-label">Surprise</td>
+                            <td><audio controls src="wav/surprise_w.wav"></audio></td>
+                            <td><audio controls src="wav/surprise_m.wav"></audio></td>
+                            <td><audio controls src="wav/surprise_s.wav"></audio></td>
+                        </tr>
+                        <tr>
+                            <td class="emotion-label">Sad</td>
+                            <td><audio controls src="wav/sad_w.wav"></audio></td>
+                            <td><audio controls src="wav/sad_m.wav"></audio></td>
+                            <td><audio controls src="wav/sad_s.wav"></audio></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 2rem;">Evaluation (VA Space Continuity)</h3>
+                <div class="eval-grid">
+
+                    <div class="img-container">
+                        <img src="img/emotion_strength.png" alt="Differentiation Accuracy">
+                        <p class="img-caption">Differentiation Accuracy Table</p>
+                    </div>
+
+                </div>
+                <div class="methodology-block" style="margin-bottom: 2rem;">
+                    <p><strong>Experimental Results:</strong> By sampling coordinates along the converged VA directions,
+                        SLEVA-TTS achieves over <strong>87% ~ 97% differentiation accuracy</strong> in emotion
+                        intensity,
+                        significantly outperforming traditional SVM-based and SER-based baselines (65% ~ 78%).</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Demo II: Multi-Emotion Transitions</h2>
+            <div class="card">
+                <p>
+                    <strong>Motivation:</strong>
+                    To evaluate whether the proposed transition mechanism can generate smooth and
+                    natural emotional changes across multiple emotion segments while maintaining
+                    high speech quality and minimizing boundary artifacts.
+                </p>
+                <div class="img-container">
+                    <img src="img/trajectory.gif" alt="Emotion Trajectory">
+                    <p class="img-caption">Emotion trajectory visualization from speech, showing temporal interpolation across audio segments.</p>
+                </div>
+                <div class="audio-grid">
+                    <div class="audio-item">
+                        <span class="audio-label">NI (No Interpolation) - Abrupt jumps</span>
+                        <audio controls src="wav/NI.wav"></audio>
+                    </div>
+                    <div class="audio-item">
+                        <span class="audio-label">IN (Interpolation only) - Increased Artifacts</span>
+                        <audio controls src="wav/IN.wav"></audio>
+                    </div>
+                    <div class="audio-item">
+                        <span class="audio-label">ST (Segmentation Training) - Reduced Artifacts</span>
+                        <audio controls src="wav/ST.wav"></audio>
+                    </div>
+                    <div class="audio-item">
+                        <span class="audio-label">SW (ST + Shifted Windows) - Smoother transitions</span>
+                        <audio controls src="wav/SW.wav"></audio>
+                    </div>
+                </div>
+                <h3 style="margin-top: 2rem;">Evaluation (VA Space Trajectory)</h3>
+                <div class="eval-grid">
+
+                    <div class="img-container">
+                        <img src="img/emotion_traject.png" alt="trajectory audio quality">
+                        <p class="img-caption">Differentiation Accuracy Table</p>
+                    </div>
+                </div>
+                <div class="methodology-block" style="margin-bottom: 2rem;">
+                    <p>
+                        <strong>Experimental Results:</strong>
+                        We compare four transition strategies for multi-emotion speech synthesis.
+                        <strong>IN</strong> (Interpolation Only) automatically interpolates emotions
+                        between adjacent segments to reduce abrupt emotional jumps. However, excessive
+                        transition boundaries often introduce unnatural artifacts and abnormal sounds.
+
+                        <br><br>
+
+                        In contrast, the proposed <strong>SW</strong> method, combining segmentation
+                        training and shifted-window interaction, achieves the best perceptual quality
+                        with a MOS score of <strong>4.13 ± 0.30</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 5rem; color: #888;">
+            <p>© 2026 Cheng-Jui Lee | NSYSU</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
